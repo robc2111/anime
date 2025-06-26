@@ -1,0 +1,97 @@
+/* Base */
+body {
+  background-color: #0f0f1a;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  margin: 0;
+}
+
+/* Typography */
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #aaaaaa;
+}
+
+/* Form */
+form label {
+  font-weight: 600;
+}
+
+.form-control,
+.form-select {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  border: 1px solid #33334d;
+}
+
+.btn-primary {
+  background-color: #ff4c60;
+  border: none;
+  padding: 0.5rem 1.5rem;
+}
+
+.btn-primary:hover {
+  background-color: #e03a4f;
+}
+
+/* Layout */
+.container .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Card */
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #1a1a2e;
+  border: none;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.card:hover {
+  background-color: #292942;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border: solid 3px #4cd7d0;
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 300px;
+}
+
+.card-body {
+  flex-grow: 1;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #aaaaaa;
+}
+
+/* Links */
+ul.list-unstyled li a {
+  color: #4cd7d0;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+ul.list-unstyled li a:hover {
+  text-decoration: underline;
+}
