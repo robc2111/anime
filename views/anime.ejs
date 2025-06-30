@@ -119,7 +119,7 @@
         </div>
         <div class="modal-body">
           <img src="<%= show.coverImage.large %>" class="img-fluid mb-3">
-          <p><%= show.description?.replace("<br><br>", '') %></p>
+          <p><%- show.description?.replace(/<br\s*\/?>/g, '<br>')?.replace(/\(Source:.*?\)/, '') %></p>
           <% if (show.externalLinks && show.externalLinks.length) { %>
   <a href="<%= show.externalLinks[0].url %>" class="btn btn-primary mt-3" target="_blank">Watch Now</a>
 <% } %>

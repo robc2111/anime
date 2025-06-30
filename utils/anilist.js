@@ -13,6 +13,7 @@ export async function getFilteredAnime({ status, genre, service, minScore, year,
           status: $status
           genre_in: $genre
         ) {
+          id
           title {
             romaji
             english
@@ -79,6 +80,7 @@ export async function getTopRatedAnime() {
     query {
       Page(perPage: 10) {
         media(sort: SCORE_DESC, type: ANIME) {
+        id
           title {
             romaji
             english
