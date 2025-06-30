@@ -3,7 +3,7 @@ import { request, gql } from 'graphql-request';
 
 const API_URL = 'https://graphql.anilist.co';
 
-export async function getFilteredAnime({ status, genre, service, minScore }) {
+export async function getFilteredAnime({ status, genre, service, minScore, year, minEpisodes, maxEpisodes }) {
   const query = gql`
     query ($status: MediaStatus, $genre: [String], $page: Int) {
       Page(page: $page, perPage: 30) {
@@ -24,6 +24,10 @@ export async function getFilteredAnime({ status, genre, service, minScore }) {
           averageScore
           genres
           status
+          episodes
+          startDate {
+            year
+          }
           externalLinks {
             site
             url
@@ -53,6 +57,18 @@ export async function getFilteredAnime({ status, genre, service, minScore }) {
         link.site.toLowerCase().includes(service.toLowerCase())
       )
     );
+  }
+
+  if (year) {
+    filtered = filtered.filter(anime => anime.startDate?.year === parseInt(year));
+  }
+
+  if (minEpisodes) {
+    filtered = filtered.filter(anime => anime.episodes >= parseInt(minEpisodes));
+  }
+
+  if (maxEpisodes) {
+    filtered = filtered.filter(anime => anime.episodes <= parseInt(maxEpisodes));
   }
 
   return filtered;

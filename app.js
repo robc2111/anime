@@ -25,22 +25,31 @@ import { getFilteredAnime } from './utils/anilist.js';
 
 app.get('/', async (req, res) => {
   try {
-    const { status, genre, service, minScore } = req.query;
-    const anime = await getFilteredAnime({ status, genre, service, minScore });
-    res.render('anime.ejs', { anime, req });
-  } catch (err) {
-    console.error('❌ Error fetching anime:', err.response?.errors || err.message || err);
-    res.status(500).send('Failed to fetch anime');
-  }
-});
+    const {
+      status,
+      genre,
+      service,
+      minScore,
+      year,
+      minEpisodes,
+      maxEpisodes
+    } = req.query;
 
-
-
-app.get('/', async (req, res) => {
-  try {
-    const { status, genre, service, minScore } = req.query;
     let anime = await getFilteredAnime({ status, genre, service, minScore });
 
+    // Apply additional local filters
+    anime = anime.filter(show => {
+      const animeYear = show.startDate?.year;
+      const episodes = show.episodes;
+
+      const matchesYear = year ? animeYear === parseInt(year) : true;
+      const matchesMinEp = minEpisodes ? episodes >= parseInt(minEpisodes) : true;
+      const matchesMaxEp = maxEpisodes ? episodes <= parseInt(maxEpisodes) : true;
+
+      return matchesYear && matchesMinEp && matchesMaxEp;
+    });
+
+    // Update external links with affiliate codes if available
     anime = anime.map(show => ({
       ...show,
       externalLinks: show.externalLinks.map(link => ({
@@ -51,7 +60,7 @@ app.get('/', async (req, res) => {
 
     res.render('anime.ejs', { anime, req });
   } catch (err) {
-    console.error('❌ Error fetching anime:', err);
+    console.error('❌ Error fetching anime:', err.response?.errors || err.message || err);
     res.status(500).send('Failed to fetch anime');
   }
 });
@@ -59,3 +68,4 @@ app.get('/', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
